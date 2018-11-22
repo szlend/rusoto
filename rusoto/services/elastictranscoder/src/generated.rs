@@ -4182,5 +4182,169 @@ impl Ets for EtsClient {
     }
 }
 
+// Struct for iterating over a paginated API
+pub struct TOTOJobsPageTokenIterator {
+    // Client for making the request
+    client: EtsClient,
+    // Parameters for the request
+    req: ListJobsByPipelineRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListJobsByPipelineResponse>,
+}
+
+impl Iterator for TOTOJobsPageTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_jobs_by_pipeline(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.jobs.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_page_token.is_some() {
+                    self.req.page_token = output.next_page_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOJobsPageTokenIterator {
+    // Client for making the request
+    client: EtsClient,
+    // Parameters for the request
+    req: ListJobsByStatusRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListJobsByStatusResponse>,
+}
+
+impl Iterator for TOTOJobsPageTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_jobs_by_status(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.jobs.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_page_token.is_some() {
+                    self.req.page_token = output.next_page_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOPipelinesPageTokenIterator {
+    // Client for making the request
+    client: EtsClient,
+    // Parameters for the request
+    req: ListPipelinesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListPipelinesResponse>,
+}
+
+impl Iterator for TOTOPipelinesPageTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_pipelines(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.pipelines.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_page_token.is_some() {
+                    self.req.page_token = output.next_page_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOPresetsPageTokenIterator {
+    // Client for making the request
+    client: EtsClient,
+    // Parameters for the request
+    req: ListPresetsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListPresetsResponse>,
+}
+
+impl Iterator for TOTOPresetsPageTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_presets(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.presets.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_page_token.is_some() {
+                    self.req.page_token = output.next_page_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod protocol_tests {}

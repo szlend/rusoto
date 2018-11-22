@@ -1894,5 +1894,46 @@ impl Polly for PollyClient {
     }
 }
 
+// Struct for iterating over a paginated API
+pub struct TOTOVoicesNextTokenIterator {
+    // Client for making the request
+    client: PollyClient,
+    // Parameters for the request
+    req: DescribeVoicesInput,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<DescribeVoicesOutput>,
+}
+
+impl Iterator for TOTOVoicesNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.describe_voices(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.voices.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod protocol_tests {}

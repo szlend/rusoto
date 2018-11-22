@@ -22536,5 +22536,497 @@ impl ApiGateway for ApiGatewayClient {
     }
 }
 
+// Struct for iterating over a paginated API
+pub struct ApiKeyItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetApiKeysRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ApiKeys>,
+}
+
+impl Iterator for ApiKeyItemsPositionIterator {
+    type Item = ApiKey;
+
+    fn next(&mut self) -> Option<ApiKey> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_api_keys(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct BasePathMappingItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetBasePathMappingsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<BasePathMappings>,
+}
+
+impl Iterator for BasePathMappingItemsPositionIterator {
+    type Item = BasePathMapping;
+
+    fn next(&mut self) -> Option<BasePathMapping> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_base_path_mappings(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct ClientCertificateItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetClientCertificatesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ClientCertificates>,
+}
+
+impl Iterator for ClientCertificateItemsPositionIterator {
+    type Item = ClientCertificate;
+
+    fn next(&mut self) -> Option<ClientCertificate> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_client_certificates(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct DeploymentItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetDeploymentsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<Deployments>,
+}
+
+impl Iterator for DeploymentItemsPositionIterator {
+    type Item = Deployment;
+
+    fn next(&mut self) -> Option<Deployment> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_deployments(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct DomainNameItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetDomainNamesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<DomainNames>,
+}
+
+impl Iterator for DomainNameItemsPositionIterator {
+    type Item = DomainName;
+
+    fn next(&mut self) -> Option<DomainName> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_domain_names(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct ModelItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetModelsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<Models>,
+}
+
+impl Iterator for ModelItemsPositionIterator {
+    type Item = Model;
+
+    fn next(&mut self) -> Option<Model> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_models(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct ResourceItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetResourcesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<Resources>,
+}
+
+impl Iterator for ResourceItemsPositionIterator {
+    type Item = Resource;
+
+    fn next(&mut self) -> Option<Resource> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_resources(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct RestApiItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetRestApisRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<RestApis>,
+}
+
+impl Iterator for RestApiItemsPositionIterator {
+    type Item = RestApi;
+
+    fn next(&mut self) -> Option<RestApi> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_rest_apis(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetUsageRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<Usage>,
+}
+
+impl Iterator for TOTOItemsPositionIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_usage(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct UsagePlanKeyItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetUsagePlanKeysRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<UsagePlanKeys>,
+}
+
+impl Iterator for UsagePlanKeyItemsPositionIterator {
+    type Item = UsagePlanKey;
+
+    fn next(&mut self) -> Option<UsagePlanKey> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_usage_plan_keys(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct UsagePlanItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetUsagePlansRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<UsagePlans>,
+}
+
+impl Iterator for UsagePlanItemsPositionIterator {
+    type Item = UsagePlan;
+
+    fn next(&mut self) -> Option<UsagePlan> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_usage_plans(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct VpcLinkItemsPositionIterator {
+    // Client for making the request
+    client: ApiGatewayClient,
+    // Parameters for the request
+    req: GetVpcLinksRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<VpcLinks>,
+}
+
+impl Iterator for VpcLinkItemsPositionIterator {
+    type Item = VpcLink;
+
+    fn next(&mut self) -> Option<VpcLink> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_vpc_links(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.items.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.position.is_some() {
+                    self.req.position = output.position;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod protocol_tests {}

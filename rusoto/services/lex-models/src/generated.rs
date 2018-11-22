@@ -7713,5 +7713,415 @@ impl LexModels for LexModelsClient {
     }
 }
 
+// Struct for iterating over a paginated API
+pub struct TOTOBotAliasesNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetBotAliasesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetBotAliasesResponse>,
+}
+
+impl Iterator for TOTOBotAliasesNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_bot_aliases(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.bot_aliases.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOBotChannelAssociationsNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetBotChannelAssociationsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetBotChannelAssociationsResponse>,
+}
+
+impl Iterator for TOTOBotChannelAssociationsNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_bot_channel_associations(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.bot_channel_associations.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct BotMetadataBotsNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetBotVersionsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetBotVersionsResponse>,
+}
+
+impl Iterator for BotMetadataBotsNextTokenIterator {
+    type Item = BotMetadata;
+
+    fn next(&mut self) -> Option<BotMetadata> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_bot_versions(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.bots.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct BotMetadataBotsNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetBotsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetBotsResponse>,
+}
+
+impl Iterator for BotMetadataBotsNextTokenIterator {
+    type Item = BotMetadata;
+
+    fn next(&mut self) -> Option<BotMetadata> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_bots(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.bots.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct BuiltinIntentMetadataIntentsNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetBuiltinIntentsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetBuiltinIntentsResponse>,
+}
+
+impl Iterator for BuiltinIntentMetadataIntentsNextTokenIterator {
+    type Item = BuiltinIntentMetadata;
+
+    fn next(&mut self) -> Option<BuiltinIntentMetadata> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_builtin_intents(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.intents.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOSlotTypesNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetBuiltinSlotTypesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetBuiltinSlotTypesResponse>,
+}
+
+impl Iterator for TOTOSlotTypesNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_builtin_slot_types(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.slot_types.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct IntentMetadataIntentsNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetIntentVersionsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetIntentVersionsResponse>,
+}
+
+impl Iterator for IntentMetadataIntentsNextTokenIterator {
+    type Item = IntentMetadata;
+
+    fn next(&mut self) -> Option<IntentMetadata> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_intent_versions(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.intents.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct IntentMetadataIntentsNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetIntentsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetIntentsResponse>,
+}
+
+impl Iterator for IntentMetadataIntentsNextTokenIterator {
+    type Item = IntentMetadata;
+
+    fn next(&mut self) -> Option<IntentMetadata> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_intents(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.intents.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOSlotTypesNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetSlotTypeVersionsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetSlotTypeVersionsResponse>,
+}
+
+impl Iterator for TOTOSlotTypesNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_slot_type_versions(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.slot_types.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOSlotTypesNextTokenIterator {
+    // Client for making the request
+    client: LexModelsClient,
+    // Parameters for the request
+    req: GetSlotTypesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<GetSlotTypesResponse>,
+}
+
+impl Iterator for TOTOSlotTypesNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.get_slot_types(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.slot_types.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod protocol_tests {}

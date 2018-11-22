@@ -6134,5 +6134,128 @@ impl Lambda for LambdaClient {
     }
 }
 
+// Struct for iterating over a paginated API
+pub struct TOTOAliasesMarkerIterator {
+    // Client for making the request
+    client: LambdaClient,
+    // Parameters for the request
+    req: ListAliasesRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListAliasesResponse>,
+}
+
+impl Iterator for TOTOAliasesMarkerIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_aliases(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.aliases.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_marker.is_some() {
+                    self.req.marker = output.next_marker;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOEventSourceMappingsMarkerIterator {
+    // Client for making the request
+    client: LambdaClient,
+    // Parameters for the request
+    req: ListEventSourceMappingsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListEventSourceMappingsResponse>,
+}
+
+impl Iterator for TOTOEventSourceMappingsMarkerIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_event_source_mappings(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.event_source_mappings.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_marker.is_some() {
+                    self.req.marker = output.next_marker;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOFunctionsMarkerIterator {
+    // Client for making the request
+    client: LambdaClient,
+    // Parameters for the request
+    req: ListFunctionsRequest,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListFunctionsResponse>,
+}
+
+impl Iterator for TOTOFunctionsMarkerIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_functions(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.functions.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_marker.is_some() {
+                    self.req.marker = output.next_marker;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod protocol_tests {}
