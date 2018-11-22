@@ -15566,7 +15566,8 @@ impl Iterator for TOTOAttributesNextTokenIterator {
         }
 
         // Request the next batch of items from the API when out of buffered ones
-        let res = self.client
+        let res = self
+            .client
             .list_typed_link_facet_attributes(self.req)
             .sync();
         match res {

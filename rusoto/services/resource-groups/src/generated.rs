@@ -2371,5 +2371,128 @@ impl ResourceGroups for ResourceGroupsClient {
     }
 }
 
+// Struct for iterating over a paginated API
+pub struct TOTOResourceIdentifiersNextTokenIterator {
+    // Client for making the request
+    client: ResourceGroupsClient,
+    // Parameters for the request
+    req: ListGroupResourcesInput,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListGroupResourcesOutput>,
+}
+
+impl Iterator for TOTOResourceIdentifiersNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_group_resources(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.resource_identifiers.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOGroupsNextTokenIterator {
+    // Client for making the request
+    client: ResourceGroupsClient,
+    // Parameters for the request
+    req: ListGroupsInput,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<ListGroupsOutput>,
+}
+
+impl Iterator for TOTOGroupsNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.list_groups(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.groups.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
+// Struct for iterating over a paginated API
+pub struct TOTOResourceIdentifiersNextTokenIterator {
+    // Client for making the request
+    client: ResourceGroupsClient,
+    // Parameters for the request
+    req: SearchResourcesInput,
+    // All the items we have downloaded but not tried to yield yet
+    buffered_items: Vec<SearchResourcesOutput>,
+}
+
+impl Iterator for TOTOResourceIdentifiersNextTokenIterator {
+    type Item = TOTO;
+
+    fn next(&mut self) -> Option<TOTO> {
+        // Return the next item in the buffer if there is one
+        if self.buffered_items.len() > 0 {
+            return self.buffered_items.pop();
+        }
+
+        // Request the next batch of items from the API when out of buffered ones
+        let res = self.client.search_resources(self.req).sync();
+        match res {
+            Ok(output) => {
+                // Add downloaded items to the buffer
+                let mut new_items = &mut (output.resource_identifiers.unwrap_or(Vec::new()));
+                new_items.reverse();
+                self.buffered_items.append(new_items);
+
+                // Update the next_token for the next API request
+                if output.next_token.is_some() {
+                    self.req.next_token = output.next_token;
+                }
+
+                // Return the first newly downloaded item if there is one
+                self.buffered_items.pop()
+            }
+            Err(error) => None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod protocol_tests {}
