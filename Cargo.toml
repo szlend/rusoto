@@ -93,6 +93,7 @@ members = [
     "rusoto/services/medialive",
     "rusoto/services/mediapackage",
     "rusoto/services/mediastore",
+    "rusoto/services/mediastore-data",
     "rusoto/services/mediatailor",
     "rusoto/services/meteringmarketplace",
     "rusoto/services/mgh",

@@ -379,6 +379,10 @@ path = "../rusoto/services/mediapackage"
 optional = true
 path = "../rusoto/services/mediastore"
 
+[dependencies.rusoto_mediastore_data]
+optional = true
+path = "../rusoto/services/mediastore-data"
+
 [dependencies.rusoto_mediatailor]
 optional = true
 path = "../rusoto/services/mediatailor"
@@ -658,6 +662,7 @@ all = [
 		"medialive",
 		"mediapackage",
 		"mediastore",
+		"mediastore-data",
 		"mediatailor",
 		"mgh",
 		"mobile",
@@ -793,6 +798,7 @@ mediaconvert = ["rusoto_mediaconvert"]
 medialive = ["rusoto_medialive"]
 mediapackage = ["rusoto_mediapackage"]
 mediastore = ["rusoto_mediastore"]
+mediastore-data = ["rusoto_mediastore_data"]
 mediatailor = ["rusoto_mediatailor"]
 mgh = ["rusoto_mgh"]
 mobile = ["rusoto_mobile"]
