@@ -36,7 +36,7 @@ hyper-tls = { git = "https://github.com/dbcfd/hyper-tls.git", branch = "tokio-al
 lazy_static = "1.0"
 log = "0.4.1"
 md5 = "0.3.6"
-pin-project = "0.4.0-alpha.7"
+pin-project = "0.4.0-alpha.11"
 base64 = "0.9"
 hex = "0.3"
 serde = { version = "1.0", features = ["derive"] }
